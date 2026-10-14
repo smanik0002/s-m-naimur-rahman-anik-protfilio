@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S. M. Naimur Rahman Anik | 3D Student Portfolio</title>
+  <meta name="description" content="Computer Science & Engineering Student | Tech Enthusiast & Aspiring Developer at Khwaja Yunus Ali University" />
+  <meta property="og:title" content="S. M. Naimur Rahman Anik - 3D Portfolio" />
+  <meta property="og:description" content="Computer Science & Engineering Student | Tech Enthusiast & Aspiring Developer" />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0a0f1d',
+              slate: '#0f172a',
+              cyan: '#00d2ff',
+              electric: '#3a7bd5',
+              accent: '#38bdf8'
+            }
+          },
+          fontFamily: {
+            heading: ['Outfit', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Vanilla-Tilt.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0f1d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00d2ff;
+    }
+
+    /* Glow Effects */
+    .glow-cyan {
+      box-shadow: 0 0 25px -5px rgba(0, 210, 255, 0.35);
+    }
+    .glow-cyan-lg {
+      box-shadow: 0 0 45px -5px rgba(0, 210, 255, 0.45);
+    }
+    .glow-border {
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.25), inset 0 0 15px rgba(0, 210, 255, 0.1);
+    }
+    .text-glow {
+      text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    }
+
+    /* Glassmorphism Classes */
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 210, 255, 0.2);
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(0, 210, 255, 0.4);
+      transform: translateY(-4px);
+    }
+
+    /* Typing Cursor */
+    .typing-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.1em;
+      vertical-align: middle;
+      background-color: #00d2ff;
+      animation: blink 0.9s infinite;
+      margin-left: 4px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-[#0a0f1d] text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+
+  <!-- Interactive 3D Three.js Background Canvas -->
+  <div id="threejs-canvas-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+  <!-- STICKY NAVBAR -->
+  <header id="main-navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#0a0f1d]/85 backdrop-blur-md border-b border-cyan-500/20 py-3.5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl overflow-hidden border border-cyan-400/50 group-hover:border-cyan-400 transition-all shadow-md shadow-cyan-950/50 shrink-0">
+          <img src="images/Anik-1.jpg" alt="S. M. Naimur Rahman Anik" class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80'">
+        </div>
+        <div>
+          <span class="font-heading font-bold text-lg text-white group-hover:text-cyan-300 transition-colors block leading-tight">
+            S.M. Naimur
+          </span>
+          <span class="text-xs text-cyan-400 font-mono tracking-wider flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+            CSE Student & Developer
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-7">
+        <a href="#hero" class="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">Home</a>
+        <a href="#about" class="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">About</a>
+        <a href="#academics" class="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">Education</a>
+        <a href="#skills" class="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">Skills</a>
+        <a href="#projects" class="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">Projects</a>
+        <a href="#contact" class="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://github.com/smanik0002" target="_blank" rel="noopener noreferrer" class="p-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 hover:text-cyan-300 text-slate-300 transition-all text-xs flex items-center gap-1.5 font-mono" title="GitHub Profile">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>GitHub</span>
+        </a>
+
+        <a href="https://wa.me/8801999459065?text=Hi%20Naimur%20Rahman%20Anik%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect%21" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 text-emerald-300 hover:text-emerald-200 hover:border-emerald-400 transition-all flex items-center gap-2 text-xs font-medium">
+          <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+          <span>Hire Me / WhatsApp</span>
+        </a>
+
+        <a href="#contact" class="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs tracking-wide transition-all shadow-md shadow-cyan-500/20 flex items-center gap-1.5">
+          <span>Let's Talk</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-300">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-4 pt-3 pb-6 bg-[#0a0f1d]/95 backdrop-blur-xl border-b border-cyan-500/20">
+      <div class="flex flex-col space-y-3 pt-2">
+        <a href="#hero" class="mobile-nav-link text-slate-300 hover:text-cyan-300 py-1.5 text-sm font-medium">Home</a>
+        <a href="#about" class="mobile-nav-link text-slate-300 hover:text-cyan-300 py-1.5 text-sm font-medium">About</a>
+        <a href="#academics" class="mobile-nav-link text-slate-300 hover:text-cyan-300 py-1.5 text-sm font-medium">Education</a>
+        <a href="#skills" class="mobile-nav-link text-slate-300 hover:text-cyan-300 py-1.5 text-sm font-medium">Skills</a>
+        <a href="#projects" class="mobile-nav-link text-slate-300 hover:text-cyan-300 py-1.5 text-sm font-medium">Projects</a>
+        <a href="#contact" class="mobile-nav-link text-slate-300 hover:text-cyan-300 py-1.5 text-sm font-medium">Contact</a>
+        <div class="pt-3 border-t border-slate-800 flex items-center gap-3">
+          <a href="https://wa.me/8801999459065" target="_blank" class="flex-1 py-2 rounded-xl bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 text-center text-xs font-semibold">
+            WhatsApp
+          </a>
+          <a href="https://github.com/smanik0002" target="_blank" class="flex-1 py-2 rounded-xl bg-slate-800 text-slate-300 border border-slate-700 text-center text-xs font-semibold">
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. HERO SECTION -->
+  <section id="hero" class="relative min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center z-10">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      
+      <!-- Left Column: Hero Text & Dynamic Typing -->
+      <div class="lg:col-span-7 text-left">
+        
+        <!-- Status Pill -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-6 glow-cyan">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span>Khwaja Yunus Ali University • CSE Undergraduate</span>
+        </div>
+
+        <!-- Main Name with Neon Gradient -->
+        <h1 class="font-heading text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight mb-4">
+          Hi, I'm <br class="hidden sm:inline" />
+          <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent text-glow">
+            S. M. Naimur
+          </span>
+          <span class="block text-2xl sm:text-3xl md:text-4xl text-slate-300 font-semibold mt-1">
+            Rahman Anik
+          </span>
+        </h1>
+
+        <!-- Dynamic Typing Animation -->
+        <div class="h-10 sm:h-12 flex items-center text-lg sm:text-2xl font-mono text-cyan-400 mb-6">
+          <span class="text-slate-400 mr-2">&gt;</span>
+          <span id="typing-text" class="font-semibold text-cyan-300"></span>
+          <span class="typing-cursor"></span>
+        </div>
+
+        <!-- Short Bio -->
+        <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mb-8">
+          I am a passionate computer science and engineering undergraduate student with a strong drive to learn and innovate. Currently exploring web development, database management, and mobile app development (React Native). I enjoy solving problems, building digital experiences, and continuously expanding my technical toolkit.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-wrap items-center gap-4 mb-10">
+          <a href="#projects" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm tracking-wide transition-all shadow-lg shadow-cyan-500/25 flex items-center gap-2 group">
+            <span>View Projects</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </a>
+
+          <a href="#contact" class="px-6 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 hover:border-cyan-500/40 transition-all text-sm font-semibold flex items-center gap-2 backdrop-blur-sm">
+            <i data-lucide="mail" class="w-4 h-4 text-cyan-400"></i>
+            <span>Contact Me</span>
+          </a>
+
+          <a href="https://wa.me/8801999459065" target="_blank" rel="noopener noreferrer" class="px-5 py-3.5 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-500/30 hover:border-emerald-400 transition-all text-sm font-medium flex items-center gap-2">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+            <span>WhatsApp</span>
+          </a>
+        </div>
+
+        <!-- Quick Info Highlights -->
+        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 max-w-lg">
+          <div>
+            <span class="text-xs font-mono text-slate-400 uppercase tracking-wider block">Discipline</span>
+            <span class="font-heading font-bold text-sm sm:text-base text-white">B.Sc. in CSE</span>
+          </div>
+          <div>
+            <span class="text-xs font-mono text-slate-400 uppercase tracking-wider block">Institution</span>
+            <span class="font-heading font-bold text-sm sm:text-base text-cyan-300">Khwaja Yunus Ali</span>
+          </div>
+          <div>
+            <span class="text-xs font-mono text-slate-400 uppercase tracking-wider block">Location</span>
+            <span class="font-heading font-bold text-sm sm:text-base text-slate-200">Sirajganj, BD</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Glowing 3D Glassmorphic Frame containing Image #1 -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="relative w-full max-w-sm sm:max-w-md" data-tilt data-tilt-max="12" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.25">
+          
+          <!-- Outer Neon Cyber Ring Glow -->
+          <div class="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-teal-400 opacity-60 blur-xl group-hover:opacity-100 transition duration-500"></div>
+
+          <!-- Glass Container -->
+          <div class="relative rounded-3xl bg-slate-900/80 border-2 border-cyan-400/40 p-5 backdrop-blur-xl shadow-2xl shadow-cyan-950/60 overflow-hidden">
+            
+            <!-- Top Cyber Header -->
+            <div class="flex items-center justify-between mb-3 text-xs font-mono text-cyan-400">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                LIVE_DEV_PORTRAIT // ANIK
+              </span>
+              <span class="text-slate-400">CSE.STUDENT</span>
+            </div>
+
+            <!-- Image #1 inside Glowing Frame -->
+            <div class="relative aspect-square rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950 group">
+              <img src="images/Anik-1.jpg" alt="S. M. Naimur Rahman Anik" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'">
+              
+              <!-- Subtle Hologram Scanline Effect -->
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/5 to-transparent pointer-events-none opacity-50"></div>
+            </div>
+
+            <!-- Bottom Floating Badge -->
+            <div class="mt-4 p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between">
+              <div>
+                <h4 class="font-heading font-bold text-sm text-white">S. M. Naimur Rahman Anik</h4>
+                <p class="text-xs text-cyan-400 font-mono">Computer Science & Engineering</p>
+              </div>
+              <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-300">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. ABOUT & ACADEMIC JOURNEY (TIMELINE SECTION) -->
+  <section id="academics" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-4 glow-cyan">
+          <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+          <span>Academic Background & Timeline</span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
+          Academic <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">Journey & Timeline</span>
+        </h2>
+        <p className="mt-4 text-base sm:text-lg text-slate-300">
+          Chronological educational background and milestones shaping my engineering fundamentals.
+        </p>
+      </div>
+
+      <!-- Timeline & Image #2 Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-20">
+        
+        <!-- Left: Image #2 in Futuristic Glowing Glassmorphic Frame (5 cols) -->
+        <div class="lg:col-span-5" data-tilt data-tilt-max="8" data-tilt-glare data-tilt-max-glare="0.2">
+          <div class="p-6 rounded-3xl bg-slate-900/80 border border-cyan-500/40 backdrop-blur-xl shadow-2xl shadow-cyan-950/40 relative overflow-hidden">
+            
+            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-400"></div>
+
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Campus Academic Portrait</span>
+              </span>
+              <span class="text-xs font-mono text-slate-400">PORTRAIT_02</span>
+            </div>
+
+            <!-- Image #2 -->
+            <div class="relative aspect-[4/5] rounded-2xl overflow-hidden border-2 border-cyan-500/40 mb-4 bg-slate-950 group">
+              <img src="images/Anik-2.jpg" alt="S. M. Naimur Rahman Anik - Campus Portrait" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80'">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-5">
+                <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider">Undergraduate Scholar</span>
+                <h3 class="font-heading text-xl font-bold text-white">S. M. Naimur Rahman Anik</h3>
+                <p class="text-xs text-slate-300 mt-1 flex items-center gap-1.5">
+                  <i data-lucide="building-2" class="w-3.5 h-3.5 text-cyan-400"></i>
+                  <span>Khwaja Yunus Ali University</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Quick Academic Facts -->
+            <div class="space-y-2 pt-2 text-xs font-mono">
+              <div class="flex items-center justify-between py-2 border-b border-slate-800">
+                <span class="text-slate-400">Current Program:</span>
+                <span class="text-cyan-300 font-semibold">B.Sc. in CSE</span>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-slate-800">
+                <span class="text-slate-400">Academic Status:</span>
+                <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Active Undergraduate
+                </span>
+              </div>
+              <div class="flex items-center justify-between py-1">
+                <span class="text-slate-400">Location:</span>
+                <span class="text-slate-300">Sirajganj, Bangladesh</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Vertical Chronological Timeline (7 cols) -->
+        <div class="lg:col-span-7">
+          <div class="relative pl-6 sm:pl-8 border-l-2 border-cyan-500/30 space-y-8">
+            
+            <!-- Milestone 1: University -->
+            <div class="relative group">
+              <!-- Glowing Marker -->
+              <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full bg-cyan-500 border-2 border-cyan-300 shadow-lg shadow-cyan-500/50 flex items-center justify-center scale-110">
+                <span class="w-2 h-2 rounded-full bg-slate-950"></span>
+              </div>
+              <div class="p-6 sm:p-7 rounded-2xl bg-slate-900/80 border border-cyan-500/50 shadow-xl shadow-cyan-950/40 backdrop-blur-md" data-tilt data-tilt-max="6">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <span class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/40">
+                    University
+                  </span>
+                  <span class="text-xs font-mono text-cyan-400 flex items-center gap-1.5">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                    <span>Current Undergraduate</span>
+                  </span>
+                </div>
+                <h3 class="font-heading font-bold text-xl text-white mb-1">Khwaja Yunus Ali University</h3>
+                <div class="text-sm font-medium text-cyan-400 mb-2 flex items-center gap-1.5">
+                  <i data-lucide="graduation-cap" class="w-4 h-4 text-cyan-400"></i>
+                  <span>B.Sc. in Computer Science & Engineering (CSE) - Undergraduate</span>
+                </div>
+                <div class="text-xs text-slate-400 mb-4 flex items-center gap-1.5 font-mono">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500"></i>
+                  <span>Sirajganj, Bangladesh</span>
+                </div>
+                <div class="space-y-2 pt-3 border-t border-slate-800 text-xs text-slate-300">
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5"></i>
+                    <span>Core subjects: Microprocessors, Database Systems, Computer Networks & Algorithms</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5"></i>
+                    <span>Exploring modern web stacks and mobile application development (React Native)</span>
+                  </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+                  <span class="text-slate-400">Status</span>
+                  <span class="px-2.5 py-0.5 rounded-md bg-emerald-950/60 text-emerald-400 border border-emerald-500/30">In Progress</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone 2: College -->
+            <div class="relative group">
+              <!-- Glowing Marker -->
+              <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full bg-slate-900 border-2 border-slate-600 group-hover:border-cyan-400 flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+              </div>
+              <div class="p-6 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/30 shadow-xl backdrop-blur-md transition-all" data-tilt data-tilt-max="6">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                    College
+                  </span>
+                  <span class="text-xs font-mono text-cyan-400 flex items-center gap-1.5">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                    <span>Higher Secondary</span>
+                  </span>
+                </div>
+                <h3 class="font-heading font-bold text-xl text-white mb-1">Sirajganj Collectorate School and College</h3>
+                <div class="text-sm font-medium text-cyan-400 mb-2 flex items-center gap-1.5">
+                  <i data-lucide="award" class="w-4 h-4 text-cyan-400"></i>
+                  <span>Higher Secondary Certificate (HSC) - Science</span>
+                </div>
+                <div class="text-xs text-slate-400 mb-4 flex items-center gap-1.5 font-mono">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500"></i>
+                  <span>Sirajganj, Bangladesh</span>
+                </div>
+                <div class="space-y-2 pt-3 border-t border-slate-800 text-xs text-slate-300">
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5"></i>
+                    <span>Rigorous foundation in Physics, Chemistry, and Higher Mathematics</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5"></i>
+                    <span>Information & Communication Technology (ICT) and logic gates</span>
+                  </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+                  <span class="text-slate-400">Status</span>
+                  <span class="px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Completed</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone 3: School -->
+            <div class="relative group">
+              <!-- Glowing Marker -->
+              <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full bg-slate-900 border-2 border-slate-600 group-hover:border-cyan-400 flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+              </div>
+              <div class="p-6 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/30 shadow-xl backdrop-blur-md transition-all" data-tilt data-tilt-max="6">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                    School
+                  </span>
+                  <span class="text-xs font-mono text-cyan-400 flex items-center gap-1.5">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                    <span>Secondary School</span>
+                  </span>
+                </div>
+                <h3 class="font-heading font-bold text-xl text-white mb-1">Sirajganj Sobuj Kanan School and College</h3>
+                <div class="text-sm font-medium text-cyan-400 mb-2 flex items-center gap-1.5">
+                  <i data-lucide="award" class="w-4 h-4 text-cyan-400"></i>
+                  <span>Secondary School Certificate (SSC) - Science</span>
+                </div>
+                <div class="text-xs text-slate-400 mb-4 flex items-center gap-1.5 font-mono">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500"></i>
+                  <span>Sirajganj, Bangladesh</span>
+                </div>
+                <div class="space-y-2 pt-3 border-t border-slate-800 text-xs text-slate-300">
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5"></i>
+                    <span>Strong grounding in General Science, Mathematics, and Computer Basics</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5"></i>
+                    <span>Early passion development for technology, logical thinking, and digital systems</span>
+                  </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+                  <span class="text-slate-400">Status</span>
+                  <span class="px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Completed</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. SKILLS & CORE COMPETENCIES (3D TILT CARDS) -->
+  <section id="skills" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-4 glow-cyan">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span>Technical Capabilities</span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
+          Skills & <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">Core Competencies</span>
+        </h2>
+        <p class="mt-4 text-base sm:text-lg text-slate-300">
+          Curated domain proficiencies spanning frontend, cross-platform mobile, databases, and CSE core systems.
+        </p>
+      </div>
+
+      <!-- Skills Grid with 3D Perspective Tilt Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Skill 1: HTML5 -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <i data-lucide="code-2" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">90%</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">HTML5</h3>
+            <span class="text-xs font-mono text-cyan-400 block mb-2">Frontend & Mobile</span>
+            <p class="text-xs text-slate-400 mb-6">Semantic architecture, DOM accessibility, SEO structure, and modern web specifications.</p>
+          </div>
+          <div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-1.5 rounded-full" style="width: 90%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skill 2: CSS3 -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <i data-lucide="palette" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">85%</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">CSS3 & Styling</h3>
+            <span class="text-xs font-mono text-cyan-400 block mb-2">Frontend & Mobile</span>
+            <p class="text-xs text-slate-400 mb-6">Tailwind CSS, Flexbox, CSS Grid, responsive design, and CSS 3D transforms.</p>
+          </div>
+          <div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-1.5 rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skill 3: React Native -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <i data-lucide="smartphone" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">Basic / Exploring</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">React Native</h3>
+            <span class="text-xs font-mono text-cyan-400 block mb-2">Mobile Development</span>
+            <p class="text-xs text-slate-400 mb-6">Cross-platform mobile UI architecture, components, navigation, and mobile state flows.</p>
+          </div>
+          <div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-1.5 rounded-full" style="width: 65%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skill 4: Database Systems (DBMS) -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <i data-lucide="database" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">80%</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Database Systems (DBMS)</h3>
+            <span class="text-xs font-mono text-cyan-400 block mb-2">Backend & Data</span>
+            <p class="text-xs text-slate-400 mb-6">SQL queries, normalization (1NF-3NF), ER modeling, relational schemas, indexing, and transactions.</p>
+          </div>
+          <div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-1.5 rounded-full" style="width: 80%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skill 5: Microprocessors -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <i data-lucide="cpu" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">75%</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Microprocessors (8086)</h3>
+            <span class="text-xs font-mono text-cyan-400 block mb-2">Hardware & Core CSE</span>
+            <p class="text-xs text-slate-400 mb-6">Assembly language fundamentals, registers, memory addressing modes, and bus interfacing.</p>
+          </div>
+          <div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-1.5 rounded-full" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skill 6: Problem Solving -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">80%</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Problem Solving</h3>
+            <span class="text-xs font-mono text-cyan-400 block mb-2">Core CSE</span>
+            <p class="text-xs text-slate-400 mb-6">Algorithmic thinking, data structures, complexity analysis, and modular software design.</p>
+          </div>
+          <div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-1.5 rounded-full" style="width: 80%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skill 7: Data Communication & Networks -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <i data-lucide="network" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">75%</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">Networks & Communication</h3>
+            <span class="text-xs font-mono text-cyan-400 block mb-2">Core CSE</span>
+            <p class="text-xs text-slate-400 mb-6">OSI 7-layer reference model, TCP/IP stack, routing protocols, and socket packet transmission.</p>
+          </div>
+          <div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-1.5 rounded-full" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skill 8: MS Office Suite -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cyan-950/50 text-cyan-300 border border-cyan-500/30">95%</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg text-white mb-1">MS Office Suite</h3>
+            <span class="text-xs font-mono text-cyan-400 block mb-2">Productivity Tools</span>
+            <p class="text-xs text-slate-400 mb-6">Microsoft Word reports, Excel financial sheets/formulas, and academic PowerPoint presentations.</p>
+          </div>
+          <div>
+            <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-1.5 rounded-full" style="width: 95%"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. PROJECTS SECTION -->
+  <section id="projects" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-4 glow-cyan">
+          <i data-lucide="folder-git-2" class="w-4 h-4"></i>
+          <span>Featured GitHub Projects</span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
+          Software & <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">Interactive Projects</span>
+        </h2>
+        <p class="mt-4 text-base sm:text-lg text-slate-300">
+          Curated repositories and applications hosted on GitHub at <span class="text-cyan-400 font-mono">github.com/smanik0002</span>.
+        </p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-12">
+        <button onclick="filterProjects('all')" class="project-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-md">
+          All
+        </button>
+        <button onclick="filterProjects('web')" class="project-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-900 text-slate-300 hover:text-white border border-slate-800">
+          Web
+        </button>
+        <button onclick="filterProjects('mobile')" class="project-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-900 text-slate-300 hover:text-white border border-slate-800">
+          Mobile
+        </button>
+        <button onclick="filterProjects('dbms')" class="project-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-900 text-slate-300 hover:text-white border border-slate-800">
+          DBMS
+        </button>
+      </div>
+
+      <!-- Projects Grid with 3D Tilt -->
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Project 1: Portfolio -->
+        <div class="project-card glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between" data-category="web" data-tilt data-tilt-max="10" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Web</span>
+              <a href="https://github.com/smanik0002" target="_blank" class="text-slate-400 hover:text-cyan-300 transition-colors">
+                <i data-lucide="github" class="w-4 h-4"></i>
+              </a>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-white mb-2">Modern 3D Developer Portfolio</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">High-tech 3D student portfolio built with HTML5, CSS3, Tailwind CSS, Three.js, and Vanilla-tilt card perspectives.</p>
+          </div>
+          <div>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">Three.js</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">Tailwind</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">Vanilla-Tilt</span>
+            </div>
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-400 font-mono">smanik0002</span>
+              <a href="https://github.com/smanik0002" target="_blank" class="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                <span>View Code</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: Mobile App -->
+        <div class="project-card glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between" data-category="mobile" data-tilt data-tilt-max="10" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono px-3 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30">Mobile</span>
+              <a href="https://github.com/smanik0002" target="_blank" class="text-slate-400 hover:text-cyan-300 transition-colors">
+                <i data-lucide="github" class="w-4 h-4"></i>
+              </a>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-white mb-2">React Native Student Explorer</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">Cross-platform mobile application architecture exploring interactive native components, navigation stacks, and offline persistence.</p>
+          </div>
+          <div>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">React Native</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">JavaScript</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">Mobile UI</span>
+            </div>
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-400 font-mono">smanik0002</span>
+              <a href="https://github.com/smanik0002" target="_blank" class="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                <span>View Code</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: DBMS -->
+        <div class="project-card glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between" data-category="dbms" data-tilt data-tilt-max="10" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">DBMS</span>
+              <a href="https://github.com/smanik0002" target="_blank" class="text-slate-400 hover:text-cyan-300 transition-colors">
+                <i data-lucide="github" class="w-4 h-4"></i>
+              </a>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-white mb-2">Relational University DB System</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">Normalized SQL database engine supporting student course registrations, grading analytics, and ACID-compliant transaction safety.</p>
+          </div>
+          <div>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">SQL</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">DBMS</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">Normalization</span>
+            </div>
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-400 font-mono">smanik0002</span>
+              <a href="https://github.com/smanik0002" target="_blank" class="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                <span>View Code</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4: Web Tools -->
+        <div class="project-card glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between" data-category="web" data-tilt data-tilt-max="10" data-tilt-glare data-tilt-max-glare="0.2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Web</span>
+              <a href="https://github.com/smanik0002" target="_blank" class="text-slate-400 hover:text-cyan-300 transition-colors">
+                <i data-lucide="github" class="w-4 h-4"></i>
+              </a>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-white mb-2">Modern Web Utility Dashboard</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">Responsive frontend client built with semantic HTML5, CSS Grid, and JavaScript for task automation and calculation.</p>
+          </div>
+          <div>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">HTML5</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">CSS3</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">JavaScript</span>
+            </div>
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-400 font-mono">smanik0002</span>
+              <a href="https://github.com/smanik0002" target="_blank" class="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                <span>View Code</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- View GitHub Profile CTA -->
+      <div class="mt-14 text-center">
+        <a href="https://github.com/smanik0002" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 hover:text-white font-mono text-xs sm:text-sm font-semibold transition-all shadow-lg glow-cyan">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>View GitHub Profile</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. CONTACT SECTION -->
+  <section id="contact" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-4 glow-cyan">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+          <span>Get In Touch</span>
+        </div>
+        <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
+          Connect & <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">Collaborate</span>
+        </h2>
+        <p class="mt-4 text-base sm:text-lg text-slate-300">
+          Feel free to reach out directly via Email, WhatsApp, Phone call, or social channels.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        
+        <!-- Left: Quick Contact Channels -->
+        <div class="lg:col-span-5 space-y-4">
+          
+          <!-- Email Card -->
+          <a href="mailto:smank.u2023@gmail.com" class="glass-card p-5 rounded-2xl flex items-center justify-between group">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-slate-400 uppercase">Direct Email</span>
+                <p class="font-heading font-semibold text-white group-hover:text-cyan-300 transition-colors text-sm sm:text-base">smank.u2023@gmail.com</p>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+
+          <!-- WhatsApp Direct -->
+          <a href="https://wa.me/8801999459065" target="_blank" rel="noopener noreferrer" class="glass-card p-5 rounded-2xl flex items-center justify-between group border-emerald-500/30">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-slate-400 uppercase">Direct WhatsApp Chat</span>
+                <p class="font-heading font-semibold text-white group-hover:text-emerald-300 transition-colors text-sm sm:text-base">+8801999459065</p>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+          </a>
+
+          <!-- Phone Call -->
+          <a href="tel:+8801999459065" class="glass-card p-5 rounded-2xl flex items-center justify-between group">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-slate-400 uppercase">Direct Phone Call</span>
+                <p class="font-heading font-semibold text-white group-hover:text-blue-300 transition-colors text-sm sm:text-base">+8801999459065</p>
+              </div>
+            </div>
+            <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
+          </a>
+
+          <!-- Socials Grid -->
+          <div class="pt-4 border-t border-slate-800">
+            <span class="text-xs font-mono text-slate-400 uppercase tracking-wider block mb-3">Social Profiles</span>
+            <div class="grid grid-cols-3 gap-3">
+              <a href="https://github.com/smanik0002" target="_blank" class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-400 text-center text-slate-300 hover:text-cyan-300 transition-all flex flex-col items-center gap-1.5 text-xs font-mono">
+                <i data-lucide="github" class="w-4 h-4"></i>
+                <span>GitHub</span>
+              </a>
+              <a href="https://www.facebook.com/cloudboy.anik" target="_blank" class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-400 text-center text-slate-300 hover:text-blue-300 transition-all flex flex-col items-center gap-1.5 text-xs font-mono">
+                <i data-lucide="facebook" class="w-4 h-4"></i>
+                <span>Facebook</span>
+              </a>
+              <a href="https://www.facebook.com/cloudboy.anik" target="_blank" class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-pink-400 text-center text-slate-300 hover:text-pink-300 transition-all flex flex-col items-center gap-1.5 text-xs font-mono">
+                <i data-lucide="instagram" class="w-4 h-4"></i>
+                <span>Instagram</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Glassmorphic Interactive Contact Form -->
+        <div class="lg:col-span-7">
+          <form id="contact-form" class="glass-panel p-7 sm:p-8 rounded-3xl shadow-2xl relative" onsubmit="handleContactSubmit(event)">
+            
+            <h3 class="font-heading font-bold text-2xl text-white mb-2">Send a Message</h3>
+            <p class="text-xs text-slate-400 mb-6">Leave a message and I will reply directly to your email.</p>
+
+            <div class="space-y-4">
+              <div>
+                <label class="text-xs font-mono text-slate-300 block mb-1.5">Your Full Name</label>
+                <input type="text" id="contact-name" required placeholder="e.g. John Doe" class="w-full px-4 py-3 rounded-xl bg-slate-950/70 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-white text-sm outline-none transition-all placeholder:text-slate-600">
+              </div>
+
+              <div>
+                <label class="text-xs font-mono text-slate-300 block mb-1.5">Email Address</label>
+                <input type="email" id="contact-email" required placeholder="name@domain.com" class="w-full px-4 py-3 rounded-xl bg-slate-950/70 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-white text-sm outline-none transition-all placeholder:text-slate-600">
+              </div>
+
+              <div>
+                <label class="text-xs font-mono text-slate-300 block mb-1.5">Message</label>
+                <textarea id="contact-message" rows="4" required placeholder="Write your project details or inquiry here..." class="w-full px-4 py-3 rounded-xl bg-slate-950/70 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-white text-sm outline-none transition-all placeholder:text-slate-600 resize-none"></textarea>
+              </div>
+
+              <button type="submit" id="submit-btn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm tracking-wide transition-all shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Send Message</span>
+              </button>
+
+              <div id="form-success" class="hidden p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs text-center font-mono">
+                ✓ Message received successfully! Thank you for reaching out.
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. FOOTER -->
+  <footer class="py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-800 bg-[#070b14] relative z-10 text-xs font-mono text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+        <span>© <span id="current-year"></span> S. M. Naimur Rahman Anik. All rights reserved.</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="#hero" class="hover:text-cyan-300 transition-colors">Top</a>
+        <a href="#about" class="hover:text-cyan-300 transition-colors">About</a>
+        <a href="#academics" class="hover:text-cyan-300 transition-colors">Education</a>
+        <a href="#skills" class="hover:text-cyan-300 transition-colors">Skills</a>
+        <a href="#projects" class="hover:text-cyan-300 transition-colors">Projects</a>
+        <a href="#contact" class="hover:text-cyan-300 transition-colors">Contact</a>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-cyan-400 transition-all" title="Back to Top">
+          <i data-lucide="arrow-up" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- EMBEDDED JAVASCRIPT: THREE.JS BACKGROUND & INTERACTION SCRIPTS -->
+  <script>
+    // 1. Initialize Lucide Icons
+    lucide.createIcons();
+
+    // 2. Set Current Year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // 3. Dynamic Typing Animation
+    const typingPhrases = [
+      "CSE Undergraduate Student",
+      "Tech Enthusiast",
+      "Aspiring Mobile & Web Developer",
+      "Khwaja Yunus Ali University"
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById('typing-text');
+
+    function typeLoop() {
+      const currentPhrase = typingPhrases[phraseIndex];
+      
+      if (isDeleting) {
+        typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let speed = isDeleting ? 40 : 80;
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        speed = 1800; // Pause at end of phrase
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % typingPhrases.length;
+        speed = 500;
+      }
+
+      setTimeout(typeLoop, speed);
+    }
+    typeLoop();
+
+    // 4. Interactive Three.js Background with 3D Floating Geometry & Particle Field
+    (function initThreeJS() {
+      const container = document.getElementById('threejs-canvas-container');
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 40;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Particle Field
+      const particleCount = 700;
+      const positions = new Float32Array(particleCount * 3);
+      const colors = new Float32Array(particleCount * 3);
+
+      const color1 = new THREE.Color('#00d2ff');
+      const color2 = new THREE.Color('#3a7bd5');
+
+      for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 120;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 120;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 120;
+
+        const mixedColor = Math.random() > 0.5 ? color1 : color2;
+        colors[i * 3] = mixedColor.r;
+        colors[i * 3 + 1] = mixedColor.g;
+        colors[i * 3 + 2] = mixedColor.b;
+      }
+
+      const particleGeometry = new THREE.BufferGeometry();
+      particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const particleMaterial = new THREE.PointsMaterial({
+        size: 1.4,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.75,
+        blending: THREE.AdditiveBlending
+      });
+
+      const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+      scene.add(particleSystem);
+
+      // Floating 3D Geometric Wireframe Shapes
+      const wireframeMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00d2ff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.18
+      });
+
+      const icosahedron = new THREE.Mesh(new THREE.IcosahedronGeometry(12, 1), wireframeMaterial);
+      icosahedron.position.set(25, 5, -10);
+      scene.add(icosahedron);
+
+      const torus = new THREE.Mesh(new THREE.TorusGeometry(10, 2, 16, 50), new THREE.MeshBasicMaterial({
+        color: 0x3a7bd5,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.15
+      }));
+      torus.position.set(-25, -10, -15);
+      scene.add(torus);
+
+      // Mouse reactivity
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetX = 0;
+      let targetY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        targetX += (mouseX * 8 - targetX) * 0.05;
+        targetY += (-mouseY * 8 - targetY) * 0.05;
+
+        particleSystem.rotation.y += 0.001;
+        particleSystem.rotation.x += 0.0005;
+
+        icosahedron.rotation.x += 0.004;
+        icosahedron.rotation.y += 0.006;
+
+        torus.rotation.x -= 0.003;
+        torus.rotation.y += 0.004;
+
+        camera.position.x = targetX;
+        camera.position.y = targetY;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Window Resize Listener
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
+
+    // 5. Mobile Menu Toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+
+    // 6. Project Filter Function
+    function filterProjects(category) {
+      const cards = document.querySelectorAll('.project-card');
+      const buttons = document.querySelectorAll('.project-filter-btn');
+
+      buttons.forEach(btn => {
+        if (btn.textContent.trim().toLowerCase() === category.toLowerCase() || (category === 'all' && btn.textContent.trim().toLowerCase() === 'all')) {
+          btn.className = 'project-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-md';
+        } else {
+          btn.className = 'project-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-900 text-slate-300 hover:text-white border border-slate-800';
+        }
+      });
+
+      cards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if (category === 'all' || cardCat === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 7. Contact Form Handler with Confetti
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      const submitBtn = document.getElementById('submit-btn');
+      const successDiv = document.getElementById('form-success');
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Sending...</span>';
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i><span>Send Message</span>';
+        lucide.createIcons();
+
+        successDiv.classList.remove('hidden');
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+
+        document.getElementById('contact-form').reset();
+        setTimeout(() => successDiv.classList.add('hidden'), 5000);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
